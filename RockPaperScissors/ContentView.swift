@@ -29,32 +29,44 @@ struct ContentView: View {
     }
     
     var body: some View {
-        
-        VStack{
-            Text("Round \(game_count + 1)")
-                .padding()
-                .font(.title2)
-            Text("Computer Chose \(array_options[computer_selection])")
-                .font(.title)
-            Text("Guess \(is_To_Win ? "Right ✅":"Wrong ❌")")
-                .padding()
-                .font(.title3)
-            
-            
-            
-            ForEach(0..<hmmArray.count){ number in
-                Button(action: {
-                    game_count += 1
-                    isCorrect = determineRightAnswer() == hmmArray[number]
-                    presentAlertLogic()
-                }, label: {
-                    Text(hmmArray[number]).padding()
+        ZStack{
+            LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
+            VStack{
+                Text("Round \(game_count + 1)")
+                    .padding()
+                    .font(.title2)
+                    .foregroundColor(.white)
+                Text("Computer Chose \(array_options[computer_selection])")
+                    .font(.title)
+                    .foregroundColor(.white)
+
+                Text("Guess \(is_To_Win ? "Right ✅":"Wrong ❌")")
+                    .padding()
+                    .font(.title3)
+                    .foregroundColor(.white)
+
                 
-                }).overlay(Capsule().stroke(Color.blue, lineWidth: 1))
+                
+                
+                ForEach(0..<hmmArray.count){ number in
+                    Button(action: {
+                        game_count += 1
+                        isCorrect = determineRightAnswer() == hmmArray[number]
+                        presentAlertLogic()
+                    }, label: {
+                        Text(hmmArray[number]).padding()
+                    
+                    })
+                    .overlay(Capsule().stroke(Color.white, lineWidth: 1))
+                    .foregroundColor(.white)
+                }
+                
+                Text("Score: \(score)/10")
+                    .padding()
+                    .foregroundColor(.white)
+
             }
             
-            Text("Score: \(score)/10")
-                .padding()
         }.alert(isPresented: $isPresentingAlert, content: {
             Alert(title: Text(alert_title), message: Text(alert_message), dismissButton: .default(Text("Ok")){
                 score = isCorrect ? score + 1 : score - 1
