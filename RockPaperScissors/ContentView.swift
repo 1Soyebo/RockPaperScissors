@@ -7,6 +7,21 @@
 
 import SwiftUI
 
+
+struct FontandForeground:ViewModifier{
+    func body(content: Content) -> some View {
+        content
+            .font(.title2)
+            .foregroundColor(.white)
+    }
+}
+
+extension View{
+    func addFontxForeground() -> some View{
+        self.modifier(FontandForeground())
+    }
+}
+
 struct ContentView: View {
     
     @State private var array_options = ["Rock", "Paper", "Scissors"].shuffled()
@@ -34,16 +49,14 @@ struct ContentView: View {
             VStack{
                 Text("Round \(game_count + 1)")
                     .padding()
-                    .font(.title2)
-                    .foregroundColor(.white)
+                    .addFontxForeground()
+                    
                 Text("Computer Chose \(array_options[computer_selection])")
-                    .font(.title)
-                    .foregroundColor(.white)
+                    .addFontxForeground()
 
                 Text("Guess \(is_To_Win ? "Right ✅":"Wrong ❌")")
                     .padding()
-                    .font(.title3)
-                    .foregroundColor(.white)
+                    .addFontxForeground()
 
                 
                 
